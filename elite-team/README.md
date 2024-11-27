@@ -4,9 +4,7 @@ Automated scheduling system for team activities and resource management.
 
 ## Overview
 - Automated scheduling system
-- Runs every Wednesday at 7 AM CST
-- Schedules for Saturday morning slots
-- 2-hour duration (7 AM - 9 AM)
+
 
 ## Project Structure
 
