@@ -1,0 +1,43 @@
+name: Elite Booking System
+
+on:
+schedule:
+  - cron: '55 6 * * *'
+workflow_dispatch:
+
+jobs:
+execute-booking:
+  runs-on: ubuntu-latest
+
+  steps:
+  - uses: actions/checkout@v2
+
+  - name: Setup Environment
+    uses: actions/setup-python@v2
+    with:
+      python-version: '3.9'
+
+  - name: Install Requirements
+    working-directory: elite-team
+    run: |
+      python -m pip install --upgrade pip
+      pip install requests python-dateutil
+
+  - name: Execute Process
+    working-directory: elite-team
+    env:
+      ELITE_USERNAME: ${{ secrets.ELITE_USERNAME }}
+      ELITE_PASSWORD: ${{ secrets.ELITE_PASSWORD }}
+    run: python scheduler.py
+
+  - name: Error Notification
+    if: failure()
+    uses: actions/github-script@v6
+    with:
+      script: |
+        const issue = await github.rest.issues.create({
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+          title: 'Elite Booking Alert',
+          body: 'Process failed in elite-team automation. Check logs for details.'
+        });
