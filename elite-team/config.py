@@ -6,6 +6,8 @@ class Config:
   def __init__(self):
       self.username = os.environ.get('ELITE_USERNAME')
       self.password = os.environ.get('ELITE_PASSWORD')
+      self.base_url = os.environ.get('BASE_URL')
+      self.base = os.environ.get('BASE')
 
       self.booking_config = {
           "type": "1",
@@ -21,9 +23,8 @@ class Config:
           'R4': 7321
       }
 
-      self.base_url = "https://www.yourcourts.com"
       self.auth_url = f"{self.base_url}/security/showLogin"
-      self.booking_url = f"{self.base_url}/yourcourts/reservation/newreservation"
+      self.booking_url = f"{self.base_url}/{self.base}/reservation/newreservation"
 
   @staticmethod
   def get_target_date():
